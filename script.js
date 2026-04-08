@@ -1,5 +1,5 @@
 // ── Debug helpers — set DEBUG = false before deploying ─────────────────────
-const DEBUG = true;
+const DEBUG = false;
 const _log  = (...a) => DEBUG && console.log('%c[script.js]', 'color:#1a3a8f;font-weight:bold', ...a);
 const _warn = (...a) => DEBUG && console.warn('%c[script.js]', 'color:#c0392b;font-weight:bold', ...a);
 
@@ -41,11 +41,15 @@ function filterProjects(category) {
     });
 
     buttons.forEach(btn => {
-        const isActive = btn.getAttribute('onclick').includes(`'${category}'`);
+        const isActive = btn.dataset.filter === category;
         btn.classList.toggle('active', isActive);
         btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
 }
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => filterProjects(btn.dataset.filter));
+});
 
 // ============================================================
 // LIGHTBOX
